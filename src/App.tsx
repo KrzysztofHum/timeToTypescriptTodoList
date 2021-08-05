@@ -26,6 +26,14 @@ const App: FC = () => {
     setDeadline(0);
   };
 
+  const completeTask = (taskNameToDelete: string): void => {
+    setTodoList(
+      todoList.filter((task) => {
+        return task.taskName !== taskNameToDelete;
+      })
+    );
+  };
+
   return (
     <div className="App">
       <div className="header">
@@ -33,12 +41,14 @@ const App: FC = () => {
           <input
             type="text"
             placeholder="Task..."
+            value={task}
             name="task"
             onChange={handleChange}
           />
           <input
             type="number"
             name="deadline"
+            value={deadline}
             placeholder="deadline (in Days)..."
             onChange={handleChange}
           />
@@ -47,7 +57,9 @@ const App: FC = () => {
       </div>
       <div className="todoList">
         {todoList.map((task: ITask, index: number) => {
-          return <TodoTask key={index} task={task}/>;
+          return (
+            <TodoTask key={index} task={task} completeTask={completeTask} />
+          );
         })}
       </div>
     </div>
